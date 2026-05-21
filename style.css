@@ -1,0 +1,529 @@
+:root {
+  --bg: #fbfbfb;
+  --surface: #fff;
+  --surface-alt: #f6f6f6;
+  --text: #141414;
+  --muted: #555;
+  --border: #ddd;
+  --accent: #000;
+  --radius: 18px;
+  --shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text);
+}
+
+button,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-shell {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.brand {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.page-nav {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.nav-group {
+  position: relative;
+}
+
+.nav-link {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 12px 10px;
+}
+
+.nav-link.active,
+.nav-link:hover {
+  color: var(--text);
+}
+
+.nav-parent {
+  position: relative;
+}
+
+.nav-submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  margin-top: 10px;
+  padding: 14px 0;
+  background: var(--surface);
+  border-radius: 18px;
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+  z-index: 10;
+}
+
+.nav-group:hover .nav-submenu,
+.nav-group.open .nav-submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav-submenu button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 12px 18px;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.nav-submenu button:hover {
+  background: var(--surface-alt);
+}
+
+.path-label {
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;
+}
+
+.sidebar {
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  background: #ddd;
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.sidebar-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.category-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.category-button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  font-size: 1.1rem;
+  color: var(--text);
+  padding: 8px 0;
+}
+
+.category-button.active {
+  font-weight: 800;
+}
+
+.content {
+  min-height: 75vh;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.section-header {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.8rem;
+  margin: 0 0 8px;
+  color: var(--muted);
+}
+
+h1 {
+  font-size: clamp(2rem, 3vw, 3.4rem);
+  margin: 0;
+  line-height: 1;
+}
+
+.intro-text,
+.spot-summary,
+.gallery-caption,
+.settings-summary {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.cards {
+  display: grid;
+  gap: 28px;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 24px;
+  align-items: stretch;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+}
+
+.card-info {
+  display: grid;
+  gap: 18px;
+}
+
+.card-title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.card-title-row h2 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.card-title-row small {
+  display: block;
+  margin-top: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.card-body {
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.card-body .tips {
+  margin-top: 10px;
+  color: var(--muted);
+}
+
+.card-location {
+  display: grid;
+  gap: 12px;
+}
+
+.address {
+  margin: 0;
+  font-weight: 700;
+}
+
+.address a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.address a:hover {
+  text-decoration: underline;
+}
+
+.star-button {
+  background: transparent;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  color: #222;
+}
+
+.star-button.favourite {
+  color: #000;
+}
+
+.star-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.card-image {
+  position: relative;
+  min-height: 240px;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.card-image:hover img {
+  transform: scale(1.02);
+}
+
+.card-image button {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.map-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 20px;
+  color: var(--muted);
+}
+
+.pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--surface-alt);
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.pill.active {
+  border-color: var(--text);
+  font-weight: 700;
+}
+
+.map-panel {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+}
+
+.map-placeholder {
+  min-height: 420px;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, #e8e8e8 0%, #f9f9f9 100%);
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 1.1rem;
+  border: 1px solid var(--border);
+}
+
+.map-locations {
+  display: grid;
+  gap: 16px;
+}
+
+.map-card {
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.map-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+.settings-panel {
+  display: grid;
+  gap: 20px;
+  max-width: 420px;
+}
+
+.settings-panel label {
+  display: grid;
+  gap: 10px;
+  font-weight: 700;
+}
+
+.settings-panel select {
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.settings-summary {
+  margin-top: 24px;
+}
+
+.gallery-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+}
+
+.gallery-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.gallery-card {
+  position: relative;
+  width: min(920px, calc(100vw - 40px));
+  max-height: calc(100vh - 80px);
+  background: #111;
+  padding: 24px;
+  border-radius: 24px;
+  display: grid;
+  gap: 16px;
+  z-index: 1;
+}
+
+.gallery-card img {
+  width: 100%;
+  max-height: 72vh;
+  object-fit: contain;
+  border-radius: 18px;
+}
+
+.gallery-close {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.gallery-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.gallery-controls button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.gallery-count {
+  color: #fff;
+  font-weight: 700;
+}
+
+.empty-state {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+  }
+
+  .card,
+  .map-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .page-nav {
+    justify-content: stretch;
+  }
+
+  .nav-link {
+    flex: 1;
+    text-align: center;
+    padding: 12px 8px;
+  }
+}

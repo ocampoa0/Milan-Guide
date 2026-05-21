@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Milan Guide</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">Milan Guide</div>
+      <nav class="page-nav" aria-label="Main navigation">
+        <div class="nav-group">
+          <button class="nav-link nav-parent active" data-page="spots" aria-expanded="false">Spots</button>
+          <div class="nav-submenu" aria-label="Spots categories submenu">
+            <button class="category-button" data-category="Attractions">Attractions</button>
+            <button class="category-button" data-category="Nightlife">Nightlife</button>
+            <button class="category-button" data-category="Food">Food</button>
+            <button class="category-button" data-category="Shopping">Shopping</button>
+            <button class="category-button" data-category="Instagramable">Instagramable</button>
+          </div>
+        </div>
+        <button class="nav-link" data-page="map">Interactive map</button>
+        <button class="nav-link" data-page="favourites">Favourites</button>
+        <button class="nav-link" data-page="language">Lang / Currency</button>
+      </nav>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-title">Spots</div>
+        <ul class="category-list" role="list">
+          <li><button class="category-button active" data-category="Attractions">Attractions</button></li>
+          <li><button class="category-button" data-category="Nightlife">Nightlife</button></li>
+          <li><button class="category-button" data-category="Food">Food</button></li>
+          <li><button class="category-button" data-category="Shopping">Shopping</button></li>
+          <li><button class="category-button" data-category="Instagramable">Instagramable</button></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <section class="page page-spots active" data-page="spots">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Spots</p>
+              <h1 id="page-title">Attractions</h1>
+            </div>
+            <div class="spot-summary" id="spot-summary">
+              Discover Milan with curated recommendations, local insights, and beautiful places to visit.
+            </div>
+          </div>
+          <div class="cards" id="spot-cards"></div>
+        </section>
+
+        <section class="page page-map" data-page="map">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Interactive</p>
+              <h1>Interactive Map</h1>
+            </div>
+            <p class="intro-text">Explore Milan visually and filter locations by category to discover your next destination.</p>
+          </div>
+          <div class="map-actions">
+            <span>Filter by topic:</span>
+            <div class="pill-list" id="map-filter"></div>
+          </div>
+          <div class="map-panel" id="map-panel">
+            <div class="map-placeholder">
+              <span>Map of Milan</span>
+            </div>
+            <div class="map-locations" id="map-locations"></div>
+          </div>
+        </section>
+
+        <section class="page page-favourites" data-page="favourites">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Favourites</p>
+              <h1>Saved spots</h1>
+            </div>
+            <p class="intro-text">Keep your favourite Milan spots in one place for easy planning.</p>
+          </div>
+          <div class="cards" id="favourite-cards"></div>
+          <p class="empty-state hidden" id="favourite-empty">No favourites yet. Tap a star to save a spot.</p>
+        </section>
+
+        <section class="page page-language" data-page="language">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Settings</p>
+              <h1>Language & currency</h1>
+            </div>
+            <p class="intro-text">Choose your preferred language and currency for the Milan guide.</p>
+          </div>
+          <div class="settings-panel">
+            <label>
+              Language
+              <select id="language-select">
+                <option value="en">English</option>
+                <option value="it">Italiano</option>
+                <option value="es">Español</option>
+                <option value="fr">Français</option>
+              </select>
+            </label>
+            <label>
+              Currency
+              <select id="currency-select">
+                <option value="EUR">EUR (€)</option>
+                <option value="USD">USD ($)</option>
+                <option value="GBP">GBP (£)</option>
+              </select>
+            </label>
+          </div>
+          <div class="settings-summary" id="settings-summary"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="gallery-modal hidden" id="gallery-modal" aria-hidden="true">
+    <div class="gallery-backdrop"></div>
+    <div class="gallery-card">
+      <button class="gallery-close" id="gallery-close" aria-label="Close image">×</button>
+      <img id="gallery-image" alt="Spot gallery" />
+      <div class="gallery-controls">
+        <button id="gallery-prev" aria-label="Previous image">‹</button>
+        <span id="gallery-count"></span>
+        <button id="gallery-next" aria-label="Next image">›</button>
+      </div>
+      <p class="gallery-caption" id="gallery-caption"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
