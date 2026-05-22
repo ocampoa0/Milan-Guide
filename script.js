@@ -182,37 +182,37 @@ const topics = [
     category: 'Attractions',
     title: 'Attractions',
     description: 'Monuments, museums and Milan’s timeless architecture.',
-    image: 'https://images.unsplash.com/photo-1576831726454-57c9b5f7b157?auto=format&fit=crop&w=900&q=80'
+    image: Duomo picture.jpg
   },
   {
     category: 'Nightlife',
     title: 'Nightlife',
     description: 'Bars, discotecas, aperitivo moments and late-night events.',
-    image: 'https://images.unsplash.com/photo-1543933129-7995f256f8f1?auto=format&fit=crop&w=900&q=80'
+    image: 'Duomo picture.jpg'
   },
   {
     category: 'Food',
     title: 'Food',
     description: 'Restaurant culture, grab-and-go bites, markets and aperitivo stops.',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80'
+    image: 'bar picture.jpg'
   },
   {
     category: 'Shopping',
     title: 'Shopping',
     description: 'Malls, design districts and style-led neighbourhood zones.',
-    image: 'https://images.unsplash.com/photo-1495121605193-b116b5b9c5d9?auto=format&fit=crop&w=900&q=80'
+    image: 'pizzapicture.jpg'
   },
   {
     category: 'Instagramable',
     title: 'Instagramable',
     description: 'Free and paid photo-worthy spots across the city.',
-    image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80'
+    image: 'shopping picture.jpg'
   }
 ];
 
 const categoryTitle = document.getElementById('category-title');
 const spotCards = document.getElementById('spot-cards');
-const favouriteCards = document.getElementById('favourite-cards');
+    image: 'Gallery picture.jpg'
 const favouriteEmpty = document.getElementById('favourite-empty');
 const topicGrid = document.getElementById('topic-grid');
 const backButton = document.getElementById('back-button');
