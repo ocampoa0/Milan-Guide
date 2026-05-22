@@ -14,22 +14,49 @@
         <div class="nav-group">
           <button class="nav-link nav-parent active" data-page="spots" aria-expanded="false">Spots</button>
           <div class="nav-submenu" aria-label="Spots categories submenu">
-            <button class="category-button" data-category="Attractions">Attractions</button>
-            <button class="category-button" data-category="Nightlife">Nightlife</button>
-            <button class="category-button" data-category="Food">Food</button>
-            <button class="category-button" data-category="Shopping">Shopping</button>
-            <button class="category-button" data-category="Instagramable">Instagramable</button>
+            <div class="submenu-group">
+              <p class="submenu-label">Attractions</p>
+              <button class="submenu-button" data-category="Attractions" data-subtopic="Monuments">Monuments</button>
+              <button class="submenu-button" data-category="Attractions" data-subtopic="Museums">Museums</button>
+            </div>
+            <div class="submenu-group">
+              <p class="submenu-label">Nightlife</p>
+              <button class="submenu-button" data-category="Nightlife" data-subtopic="Bars">Bars</button>
+              <button class="submenu-button" data-category="Nightlife" data-subtopic="Discotecas">Discotecas</button>
+              <button class="submenu-button" data-category="Nightlife" data-subtopic="Aperitivo">Aperitivo</button>
+              <button class="submenu-button" data-category="Nightlife" data-subtopic="Events">Events</button>
+            </div>
+            <div class="submenu-group">
+              <p class="submenu-label">Food</p>
+              <button class="submenu-button" data-category="Food" data-subtopic="Restaurants">Restaurants</button>
+              <button class="submenu-button" data-category="Food" data-subtopic="Aperitivo Again">Aperitivo Again</button>
+              <button class="submenu-button" data-category="Food" data-subtopic="Markets">Markets</button>
+              <button class="submenu-button" data-category="Food" data-subtopic="Grab & Go">Grab & Go</button>
+            </div>
+            <div class="submenu-group">
+              <p class="submenu-label">Shopping</p>
+              <button class="submenu-button" data-category="Shopping" data-subtopic="Malls">Malls</button>
+              <button class="submenu-button" data-category="Shopping" data-subtopic="Zones">Zones</button>
+            </div>
+            <div class="submenu-group">
+              <p class="submenu-label">Instagramable</p>
+              <button class="submenu-button" data-category="Instagramable" data-subtopic="Free spots">Free spots</button>
+              <button class="submenu-button" data-category="Instagramable" data-subtopic="Pay spots">Pay spots</button>
+            </div>
           </div>
         </div>
         <button class="nav-link" data-page="map">Interactive map</button>
         <button class="nav-link" data-page="favourites">Favourites</button>
-        <button class="nav-link" data-page="language">Lang / Currency</button>
+        <button class="nav-link" data-page="add">Add New</button>
       </nav>
     </header>
 
     <div class="layout">
       <aside class="sidebar">
-        <div class="sidebar-title">Spots</div>
+        <div class="sidebar-header">
+          <span class="sidebar-title">Spots</span>
+          <button id="sidebar-toggle" class="sidebar-toggle" aria-expanded="true">Hide</button>
+        </div>
         <ul class="category-list" role="list">
           <li><button class="category-button active" data-category="Attractions">Attractions</button></li>
           <li><button class="category-button" data-category="Nightlife">Nightlife</button></li>
@@ -41,16 +68,22 @@
 
       <main class="content">
         <section class="page page-spots active" data-page="spots">
-          <div class="section-header">
+          <div class="landing-hero">
+            <p class="eyebrow">Milano essentials</p>
+            <h1>Milano's (no local) local guide</h1>
+            <p class="landing-subtitle">The interactive guide to enjoy Milan’s city as a local. Or not*</p>
+          </div>
+          <div class="topic-grid" id="topic-grid"></div>
+          <div class="section-header hidden category-section" id="category-section">
             <div>
               <p class="eyebrow">Spots</p>
-              <h1 id="page-title">Attractions</h1>
+              <h2 id="category-title">Selected topic</h2>
             </div>
             <div class="spot-summary" id="spot-summary">
               Discover Milan with curated recommendations, local insights, and beautiful places to visit.
             </div>
           </div>
-          <div class="cards" id="spot-cards"></div>
+          <div class="cards hidden" id="spot-cards"></div>
         </section>
 
         <section class="page page-map" data-page="map">
@@ -85,34 +118,48 @@
           <p class="empty-state hidden" id="favourite-empty">No favourites yet. Tap a star to save a spot.</p>
         </section>
 
-        <section class="page page-language" data-page="language">
+        <section class="page page-add" data-page="add">
           <div class="section-header">
             <div>
-              <p class="eyebrow">Settings</p>
-              <h1>Language & currency</h1>
+              <p class="eyebrow">Personal</p>
+              <h1>Add new place</h1>
             </div>
-            <p class="intro-text">Choose your preferred language and currency for the Milan guide.</p>
+            <p class="intro-text">Submit a new Milan spot and save it to your personal guide.</p>
           </div>
-          <div class="settings-panel">
+          <form class="add-form" id="add-form">
             <label>
-              Language
-              <select id="language-select">
-                <option value="en">English</option>
-                <option value="it">Italiano</option>
-                <option value="es">Español</option>
-                <option value="fr">Français</option>
+              Place name
+              <input type="text" id="new-title" name="title" placeholder="Bar Basso" required />
+            </label>
+            <label>
+              Category
+              <select id="new-category" name="category" required>
+                <option value="Attractions">Attractions</option>
+                <option value="Nightlife">Nightlife</option>
+                <option value="Food">Food</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Instagramable">Instagramable</option>
               </select>
             </label>
             <label>
-              Currency
-              <select id="currency-select">
-                <option value="EUR">EUR (€)</option>
-                <option value="USD">USD ($)</option>
-                <option value="GBP">GBP (£)</option>
-              </select>
+              Subtopic
+              <input type="text" id="new-subtopic" name="subtopic" placeholder="Restaurants, Bars, Museums..." required />
             </label>
-          </div>
-          <div class="settings-summary" id="settings-summary"></div>
+            <label>
+              Description
+              <textarea id="new-description" name="description" placeholder="A hidden gem in Milan..." required></textarea>
+            </label>
+            <label>
+              Address
+              <input type="text" id="new-address" name="address" placeholder="Via Example, Milano" required />
+            </label>
+            <label>
+              Image URL
+              <input type="url" id="new-image" name="image" placeholder="https://..." required />
+            </label>
+            <button type="submit">Save place</button>
+          </form>
+          <div class="form-message hidden" id="form-message"></div>
         </section>
       </main>
     </div>

@@ -4,6 +4,7 @@ const data = [
     title: 'Bene bene',
     category: 'Nightlife',
     subtitle: 'Nightlife – Bars',
+    subtype: 'Bars',
     description: 'A listening bar with cool music, fancy drinks and a chill vibe. Ideal for people who like late evenings and relaxed conversations.',
     tips: 'Best visited after 9 PM, this spot is ideal for a relaxed drink and good music in Porta Venezia.',
     zone: 'Porta Venezia',
@@ -19,6 +20,7 @@ const data = [
     title: 'Futura',
     category: 'Nightlife',
     subtitle: 'Nightlife – Bars',
+    subtype: 'Bars',
     description: 'A listening bar with ambient music, delightful drinks and a chill vibe. Perfect for unwinding after a day of exploring Milan.',
     tips: 'Try to arrive early to catch a table in the cosy lounge and enjoy the cocktail selection.',
     zone: 'Porta Venezia',
@@ -35,6 +37,7 @@ const data = [
     title: 'Duomo di Milano',
     category: 'Attractions',
     subtitle: 'Attractions',
+    subtype: 'Monuments',
     description: 'Milan’s iconic gothic cathedral with its intricate details, dreamy rooftop views, and timeless grandeur.',
     tips: 'Book your rooftop ticket ahead and arrive early to avoid long lines, especially on sunny days.',
     zone: 'Duomo',
@@ -51,6 +54,7 @@ const data = [
     title: 'Galleria Vittorio Emanuele II',
     category: 'Attractions',
     subtitle: 'Attractions',
+    subtype: 'Museums',
     description: 'A historic shopping arcade with glass ceilings, luxury boutiques, and iconic Milanese charm.',
     tips: 'Admire the mosaics on the floor and try the classic panino or espresso at one of the cafes inside.',
     zone: 'Duomo',
@@ -67,6 +71,7 @@ const data = [
     title: 'Luini',
     category: 'Food',
     subtitle: 'Food – Street bites',
+    subtype: 'Grab & Go',
     description: 'A historic bakery famous for panzerotti, the perfect quick bite while exploring Milan.',
     tips: 'Order the classic tomato and mozzarella panzerotto and enjoy it fresh while walking through the city centre.',
     zone: 'Duomo',
@@ -83,6 +88,7 @@ const data = [
     title: 'Eataly Smeraldo',
     category: 'Food',
     subtitle: 'Food – Market experience',
+    subtype: 'Markets',
     description: 'A gourmet food marketplace with premium Italian produce, wine and casual restaurants.',
     tips: 'Sample artisanal cheeses and shop for a picnic to enjoy in the nearby park.',
     zone: 'Garibaldi',
@@ -99,6 +105,7 @@ const data = [
     title: 'Quadrilatero della Moda',
     category: 'Shopping',
     subtitle: 'Shopping – Luxury',
+    subtype: 'Malls',
     description: 'Milan’s fashion district with high-end boutiques, designer stores, and elegant window displays.',
     tips: 'Look for window displays on Via Montenapoleone and save time by visiting early in the afternoon.',
     zone: 'Quadrilatero della Moda',
@@ -115,6 +122,7 @@ const data = [
     title: 'Corso Buenos Aires',
     category: 'Shopping',
     subtitle: 'Shopping – High street',
+    subtype: 'Zones',
     description: 'A busy shopping street with familiar brands, cafés, and a lively city atmosphere.',
     tips: 'Browse the sidewalks for small souvenir shops and stop at a café for a quick espresso.',
     zone: 'Corso Buenos Aires',
@@ -131,6 +139,7 @@ const data = [
     title: 'Navigli',
     category: 'Instagramable',
     subtitle: 'Instagramable – Canals',
+    subtype: 'Free spots',
     description: 'A charming canal neighborhood with colourful bridges, cafés and evening lights.',
     tips: 'Visit at sunset for the best photos and stay for an aperitivo along the canal.',
     zone: 'Navigli',
@@ -147,6 +156,7 @@ const data = [
     title: 'Porta Nuova',
     category: 'Instagramable',
     subtitle: 'Instagramable – Modern skyline',
+    subtype: 'Pay spots',
     description: 'A modern district with architectural landmarks and reflective towers that shine at night.',
     tips: 'Walk along Piazza Gae Aulenti for dramatic skyscraper reflections and late-night photo spots.',
     zone: 'Porta Nuova',
@@ -162,19 +172,54 @@ const data = [
 
 const state = {
   activePage: 'spots',
-  activeCategory: 'Attractions',
-  favourites: new Set(JSON.parse(localStorage.getItem('milanFavourites') || '[]')),
-  language: 'en',
-  currency: 'EUR'
+  activeCategory: null,
+  activeSubtopic: null,
+  favourites: new Set(JSON.parse(localStorage.getItem('milanFavourites') || '[]'))
 };
 
-const pageTitle = document.getElementById('page-title');
+const topics = [
+  {
+    category: 'Attractions',
+    title: 'Attractions',
+    description: 'Monuments, museums and Milan’s timeless architecture.',
+    image: 'https://images.unsplash.com/photo-1576831726454-57c9b5f7b157?auto=format&fit=crop&w=900&q=80'
+  },
+  {
+    category: 'Nightlife',
+    title: 'Nightlife',
+    description: 'Bars, discotecas, aperitivo moments and late-night events.',
+    image: 'https://images.unsplash.com/photo-1543933129-7995f256f8f1?auto=format&fit=crop&w=900&q=80'
+  },
+  {
+    category: 'Food',
+    title: 'Food',
+    description: 'Restaurant culture, grab-and-go bites, markets and aperitivo stops.',
+    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80'
+  },
+  {
+    category: 'Shopping',
+    title: 'Shopping',
+    description: 'Malls, design districts and style-led neighbourhood zones.',
+    image: 'https://images.unsplash.com/photo-1495121605193-b116b5b9c5d9?auto=format&fit=crop&w=900&q=80'
+  },
+  {
+    category: 'Instagramable',
+    title: 'Instagramable',
+    description: 'Free and paid photo-worthy spots across the city.',
+    image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80'
+  }
+];
+
+const categoryTitle = document.getElementById('category-title');
 const spotCards = document.getElementById('spot-cards');
 const favouriteCards = document.getElementById('favourite-cards');
 const favouriteEmpty = document.getElementById('favourite-empty');
-const settingsSummary = document.getElementById('settings-summary');
-const languageSelect = document.getElementById('language-select');
-const currencySelect = document.getElementById('currency-select');
+const topicGrid = document.getElementById('topic-grid');
+const categorySection = document.getElementById('category-section');
+const addForm = document.getElementById('add-form');
+const formMessage = document.getElementById('form-message');
+const sidebarToggle = document.getElementById('sidebar-toggle');
+const sidebar = document.querySelector('.sidebar');
 const mapFilter = document.getElementById('map-filter');
 const mapLocations = document.getElementById('map-locations');
 const galleryModal = document.getElementById('gallery-modal');
@@ -193,10 +238,38 @@ let galleryState = {
   title: ''
 };
 
+function renderTopicGrid() {
+  topicGrid.innerHTML = topics.map(createTopicCard).join('');
+}
+
+function createTopicCard(topic) {
+  return `
+    <article class="topic-card" data-category="${topic.category}">
+      <img src="${topic.image}" alt="${topic.title}" loading="lazy" />
+      <div class="topic-card-content">
+        <h3>${topic.title}</h3>
+        <p>${topic.description}</p>
+        <button type="button" data-category="${topic.category}">Enter</button>
+      </div>
+    </article>
+  `;
+}
+
 function renderSpotCards() {
-  const spots = data.filter(item => item.category === state.activeCategory);
-  pageTitle.textContent = state.activeCategory;
-  spotCards.innerHTML = spots.map(item => createSpotCard(item)).join('');
+  if (!state.activeCategory) {
+    categorySection.classList.add('hidden');
+    spotCards.classList.add('hidden');
+    spotCards.innerHTML = '';
+    return;
+  }
+
+  const spots = data.filter(item => item.category === state.activeCategory && (!state.activeSubtopic || item.subtype === state.activeSubtopic));
+  categorySection.classList.remove('hidden');
+  spotCards.classList.remove('hidden');
+  categoryTitle.textContent = state.activeSubtopic ? `${state.activeCategory} — ${state.activeSubtopic}` : state.activeCategory;
+  spotCards.innerHTML = spots.length
+    ? spots.map(item => createSpotCard(item)).join('')
+    : `<p>No places found for this topic yet.</p>`;
 }
 
 function createSpotCard(item) {
@@ -208,7 +281,7 @@ function createSpotCard(item) {
           <div>
             <h2>${item.title}</h2>
             <small>${item.subtitle}</small>
-            <span class="path-label">Spots — ${item.category}</span>
+            <span class="path-label">Spots — ${item.category}${item.subtype ? ` • ${item.subtype}` : ''}</span>
           </div>
           <button class="star-button ${isFav ? 'favourite' : ''}" data-action="toggle-fav" data-id="${item.id}" aria-label="${isFav ? 'Remove from favourites' : 'Add to favourites'}">
             ${createStarIcon(isFav)}
@@ -262,22 +335,20 @@ function renderMapLocations() {
   `).join('');
 }
 
-function renderSettingsSummary() {
-  const languageLabel = languageSelect.selectedOptions[0].textContent;
-  const currencyLabel = currencySelect.selectedOptions[0].textContent;
-  settingsSummary.textContent = `Your guide is set to ${languageLabel} with prices shown in ${currencyLabel}.`;
-}
-
 function setActivePage(page) {
   state.activePage = page;
   document.querySelectorAll('.page').forEach(section => {
     section.classList.toggle('active', section.dataset.page === page);
   });
   navButtons.forEach(button => button.classList.toggle('active', button.dataset.page === page));
+  if (page === 'spots') {
+    renderTopicGrid();
+  }
 }
 
-function setActiveCategory(category) {
+function setActiveCategory(category, subtopic = null) {
   state.activeCategory = category;
+  state.activeSubtopic = subtopic;
   categoryButtons.forEach(button => button.classList.toggle('active', button.dataset.category === category));
   renderSpotCards();
   renderMapFilters();
@@ -330,6 +401,30 @@ function handleCardAction(event) {
   }
 }
 
+function handleAddSubmit(event) {
+  event.preventDefault();
+  const formData = new FormData(addForm);
+  const newSpot = {
+    id: `user-${Date.now()}`,
+    title: formData.get('title').trim(),
+    category: formData.get('category'),
+    subtitle: `${formData.get('category')} – ${formData.get('subtopic')}`,
+    subtype: formData.get('subtopic').trim(),
+    description: formData.get('description').trim(),
+    tips: 'Added to your personal list.',
+    zone: formData.get('address').trim(),
+    address: formData.get('address').trim(),
+    mapLink: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(formData.get('address').trim())}`,
+    images: [formData.get('image').trim()]
+  };
+  data.push(newSpot);
+  addForm.reset();
+  formMessage.textContent = `Saved ${newSpot.title} to your personal guide.`;
+  formMessage.classList.remove('hidden');
+  setActivePage('spots');
+  setActiveCategory(newSpot.category, newSpot.subtype);
+}
+
 function bindEvents() {
   const navGroup = document.querySelector('.nav-group');
   const navParent = document.querySelector('.nav-parent');
@@ -347,15 +442,16 @@ function bindEvents() {
       }
     }
 
-    const categoryButton = event.target.closest('.category-button');
-    if (categoryButton) {
-      setActiveCategory(categoryButton.dataset.category);
+    const categoryControl = event.target.closest('.category-button, .submenu-button, .topic-card');
+    if (categoryControl) {
+      setActiveCategory(categoryControl.dataset.category, categoryControl.dataset.subtopic || null);
       if (navGroup) {
         navGroup.classList.remove('open');
         navParent?.setAttribute('aria-expanded', 'false');
       }
       setActivePage('spots');
     }
+
     const pillButton = event.target.closest('.pill');
     if (pillButton) {
       setActiveCategory(pillButton.dataset.filter);
@@ -372,14 +468,13 @@ function bindEvents() {
     }
   });
 
-  languageSelect.addEventListener('change', event => {
-    state.language = event.target.value;
-    renderSettingsSummary();
-  });
+  addForm.addEventListener('submit', handleAddSubmit);
 
-  currencySelect.addEventListener('change', event => {
-    state.currency = event.target.value;
-    renderSettingsSummary();
+  sidebarToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('collapsed');
+    const expanded = sidebar.classList.contains('collapsed') ? 'false' : 'true';
+    sidebarToggle.setAttribute('aria-expanded', expanded);
+    sidebarToggle.textContent = sidebar.classList.contains('collapsed') ? 'Show' : 'Hide';
   });
 
   galleryClose.addEventListener('click', closeGallery);
@@ -401,9 +496,8 @@ function bindEvents() {
 
 function init() {
   setActivePage(state.activePage);
-  setActiveCategory(state.activeCategory);
+  renderTopicGrid();
   renderFavourites();
-  renderSettingsSummary();
   setActivePage(state.activePage);
   bindEvents();
 }
