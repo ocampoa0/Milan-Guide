@@ -215,7 +215,8 @@ const spotCards = document.getElementById('spot-cards');
 const favouriteCards = document.getElementById('favourite-cards');
 const favouriteEmpty = document.getElementById('favourite-empty');
 const topicGrid = document.getElementById('topic-grid');
-const categorySection = document.getElementById('category-section');
+const backButton = document.getElementById('back-button');
+const spotSummary = document.getElementById('spot-summary');
 const addForm = document.getElementById('add-form');
 const formMessage = document.getElementById('form-message');
 const sidebarToggle = document.getElementById('sidebar-toggle');
@@ -244,28 +245,18 @@ function renderTopicGrid() {
 
 function createTopicCard(topic) {
   return `
-    <article class="topic-card" data-category="${topic.category}">
+    <article class="topic-card" data-category="${topic.category}" role="button" tabindex="0">
       <img src="${topic.image}" alt="${topic.title}" loading="lazy" />
       <div class="topic-card-content">
         <h3>${topic.title}</h3>
         <p>${topic.description}</p>
-        <button type="button" data-category="${topic.category}">Enter</button>
       </div>
     </article>
   `;
 }
 
 function renderSpotCards() {
-  if (!state.activeCategory) {
-    categorySection.classList.add('hidden');
-    spotCards.classList.add('hidden');
-    spotCards.innerHTML = '';
-    return;
-  }
-
   const spots = data.filter(item => item.category === state.activeCategory && (!state.activeSubtopic || item.subtype === state.activeSubtopic));
-  categorySection.classList.remove('hidden');
-  spotCards.classList.remove('hidden');
   categoryTitle.textContent = state.activeSubtopic ? `${state.activeCategory} — ${state.activeSubtopic}` : state.activeCategory;
   spotCards.innerHTML = spots.length
     ? spots.map(item => createSpotCard(item)).join('')
@@ -353,6 +344,7 @@ function setActiveCategory(category, subtopic = null) {
   renderSpotCards();
   renderMapFilters();
   renderMapLocations();
+  setActivePage('category-detail');
 }
 
 function toggleFavourite(id) {
@@ -442,14 +434,13 @@ function bindEvents() {
       }
     }
 
-    const categoryControl = event.target.closest('.category-button, .submenu-button, .topic-card');
+    const categoryControl = event.target.closest('.category-button, .submenu-button, .submenu-item, .topic-card');
     if (categoryControl) {
       setActiveCategory(categoryControl.dataset.category, categoryControl.dataset.subtopic || null);
       if (navGroup) {
         navGroup.classList.remove('open');
         navParent?.setAttribute('aria-expanded', 'false');
       }
-      setActivePage('spots');
     }
 
     const pillButton = event.target.closest('.pill');
@@ -470,11 +461,14 @@ function bindEvents() {
 
   addForm.addEventListener('submit', handleAddSubmit);
 
+  backButton.addEventListener('click', () => {
+    setActivePage('spots');
+  });
+
   sidebarToggle.addEventListener('click', () => {
     sidebar.classList.toggle('collapsed');
     const expanded = sidebar.classList.contains('collapsed') ? 'false' : 'true';
     sidebarToggle.setAttribute('aria-expanded', expanded);
-    sidebarToggle.textContent = sidebar.classList.contains('collapsed') ? 'Show' : 'Hide';
   });
 
   galleryClose.addEventListener('click', closeGallery);

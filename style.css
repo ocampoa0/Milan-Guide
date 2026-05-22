@@ -88,6 +88,7 @@ button {
   top: 100%;
   left: 0;
   min-width: 220px;
+  max-height: 400px;
   margin-top: 10px;
   padding: 14px 0;
   background: var(--surface);
@@ -97,6 +98,7 @@ button {
   visibility: hidden;
   transform: translateY(8px);
   transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+  overflow-y: auto;
   z-index: 10;
 }
 
@@ -159,6 +161,7 @@ button {
   display: grid;
   grid-template-columns: minmax(82px, 260px) 1fr;
   gap: 24px;
+  transition: grid-template-columns 180ms ease;
 }
 
 .sidebar {
@@ -168,11 +171,13 @@ button {
   background: #ddd;
   border-radius: var(--radius);
   padding: 24px;
-  transition: width 180ms ease, padding 180ms ease;
+  transition: width 180ms ease, padding 180ms ease, min-width 180ms ease;
+  min-width: 260px;
 }
 
 .sidebar.collapsed {
   width: 82px;
+  min-width: 82px;
   padding: 20px 16px;
 }
 
@@ -191,6 +196,21 @@ button {
   border-radius: 999px;
   padding: 8px 14px;
   font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  transition: transform 180ms ease;
+}
+
+.sidebar.collapsed .sidebar-toggle {
+  transform: scaleX(-1);
+}
+
+.sidebar-toggle-icon {
+  width: 20px;
+  height: 20px;
 }
 
 .sidebar.collapsed .sidebar-title,
@@ -228,6 +248,47 @@ button {
   font-weight: 800;
 }
 
+.category-item {
+  position: relative;
+}
+
+.category-item:hover .category-submenu {
+  opacity: 1;
+  visibility: visible;
+  max-height: 500px;
+}
+
+.category-submenu {
+  list-style: none;
+  margin: 8px 0 0 0;
+  padding: 8px 0 8px 16px;
+  background: var(--surface-alt);
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 150ms ease, max-height 150ms ease, visibility 150ms ease;
+}
+
+.submenu-item {
+  display: block;
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  font-size: 0.95rem;
+  color: var(--muted);
+  padding: 6px 0;
+  cursor: pointer;
+  transition: color 150ms ease;
+}
+
+.submenu-item:hover {
+  color: var(--text);
+  font-weight: 600;
+}
+
 .content {
   min-height: 75vh;
 }
@@ -246,6 +307,26 @@ button {
 
 .section-header {
   margin-bottom: 28px;
+}
+
+.category-detail-header {
+  margin-bottom: 28px;
+}
+
+.back-button {
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 8px 0;
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: color 180ms ease;
+}
+
+.back-button:hover {
+  color: var(--muted);
 }
 
 .eyebrow {
@@ -310,6 +391,7 @@ h1 {
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
   transition: transform 180ms ease, border-color 180ms ease;
+  cursor: pointer;
 }
 
 .topic-card:hover {

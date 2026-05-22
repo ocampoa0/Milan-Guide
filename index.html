@@ -55,26 +55,68 @@
       <aside class="sidebar">
         <div class="sidebar-header">
           <span class="sidebar-title">Spots</span>
-          <button id="sidebar-toggle" class="sidebar-toggle" aria-expanded="true">Hide</button>
+          <button id="sidebar-toggle" class="sidebar-toggle" aria-expanded="true" aria-label="Toggle sidebar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="sidebar-toggle-icon">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
         </div>
         <ul class="category-list" role="list">
-          <li><button class="category-button active" data-category="Attractions">Attractions</button></li>
-          <li><button class="category-button" data-category="Nightlife">Nightlife</button></li>
-          <li><button class="category-button" data-category="Food">Food</button></li>
-          <li><button class="category-button" data-category="Shopping">Shopping</button></li>
-          <li><button class="category-button" data-category="Instagramable">Instagramable</button></li>
+          <li class="category-item">
+            <button class="category-button active" data-category="Attractions">Attractions</button>
+            <ul class="category-submenu" role="list">
+              <li><button class="submenu-item" data-category="Attractions" data-subtopic="Monuments">Monuments</button></li>
+              <li><button class="submenu-item" data-category="Attractions" data-subtopic="Museums">Museums</button></li>
+            </ul>
+          </li>
+          <li class="category-item">
+            <button class="category-button" data-category="Nightlife">Nightlife</button>
+            <ul class="category-submenu" role="list">
+              <li><button class="submenu-item" data-category="Nightlife" data-subtopic="Bars">Bars</button></li>
+              <li><button class="submenu-item" data-category="Nightlife" data-subtopic="Discotecas">Discotecas</button></li>
+              <li><button class="submenu-item" data-category="Nightlife" data-subtopic="Aperitivo">Aperitivo</button></li>
+              <li><button class="submenu-item" data-category="Nightlife" data-subtopic="Events">Events</button></li>
+            </ul>
+          </li>
+          <li class="category-item">
+            <button class="category-button" data-category="Food">Food</button>
+            <ul class="category-submenu" role="list">
+              <li><button class="submenu-item" data-category="Food" data-subtopic="Restaurants">Restaurants</button></li>
+              <li><button class="submenu-item" data-category="Food" data-subtopic="Aperitivo Again">Aperitivo Again</button></li>
+              <li><button class="submenu-item" data-category="Food" data-subtopic="Markets">Markets</button></li>
+              <li><button class="submenu-item" data-category="Food" data-subtopic="Grab & Go">Grab & Go</button></li>
+            </ul>
+          </li>
+          <li class="category-item">
+            <button class="category-button" data-category="Shopping">Shopping</button>
+            <ul class="category-submenu" role="list">
+              <li><button class="submenu-item" data-category="Shopping" data-subtopic="Malls">Malls</button></li>
+              <li><button class="submenu-item" data-category="Shopping" data-subtopic="Zones">Zones</button></li>
+            </ul>
+          </li>
+          <li class="category-item">
+            <button class="category-button" data-category="Instagramable">Instagramable</button>
+            <ul class="category-submenu" role="list">
+              <li><button class="submenu-item" data-category="Instagramable" data-subtopic="Free spots">Free spots</button></li>
+              <li><button class="submenu-item" data-category="Instagramable" data-subtopic="Pay spots">Pay spots</button></li>
+            </ul>
+          </li>
         </ul>
       </aside>
 
       <main class="content">
         <section class="page page-spots active" data-page="spots">
           <div class="landing-hero">
-            <p class="eyebrow">Milano essentials</p>
+        
             <h1>Milano's (no local) local guide</h1>
             <p class="landing-subtitle">The interactive guide to enjoy Milan’s city as a local. Or not*</p>
           </div>
           <div class="topic-grid" id="topic-grid"></div>
-          <div class="section-header hidden category-section" id="category-section">
+        </section>
+
+        <section class="page page-category-detail" data-page="category-detail">
+          <div class="category-detail-header">
+            <button id="back-button" class="back-button" aria-label="Go back">← Back</button>
             <div>
               <p class="eyebrow">Spots</p>
               <h2 id="category-title">Selected topic</h2>
@@ -83,7 +125,7 @@
               Discover Milan with curated recommendations, local insights, and beautiful places to visit.
             </div>
           </div>
-          <div class="cards hidden" id="spot-cards"></div>
+          <div class="cards" id="spot-cards"></div>
         </section>
 
         <section class="page page-map" data-page="map">
