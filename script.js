@@ -182,31 +182,31 @@ const topics = [
     category: 'Attractions',
     title: 'Attractions',
     description: 'Monuments, museums and Milan’s timeless architecture.',
-    image: Duomo picture.jpg
+    image: 'Duomo picture.jpg'
   },
   {
     category: 'Nightlife',
     title: 'Nightlife',
     description: 'Bars, discotecas, aperitivo moments and late-night events.',
-    image: 'Duomo picture.jpg'
+    image: 'bar picture.jpg'
   },
   {
     category: 'Food',
     title: 'Food',
     description: 'Restaurant culture, grab-and-go bites, markets and aperitivo stops.',
-    image: 'bar picture.jpg'
+    image: 'pizzapicture.jpg'
   },
   {
     category: 'Shopping',
     title: 'Shopping',
     description: 'Malls, design districts and style-led neighbourhood zones.',
-    image: 'pizzapicture.jpg'
+    image: 'shopping picture.jpg'
   },
   {
     category: 'Instagramable',
     title: 'Instagramable',
     description: 'Free and paid photo-worthy spots across the city.',
-    image: 'shopping picture.jpg'
+    image: 'Gallery picture.jpg'
   }
 ];
 
