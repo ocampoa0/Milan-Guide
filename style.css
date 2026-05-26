@@ -55,6 +55,14 @@ button {
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+  color: var(--text);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.brand:hover,
+.brand:focus {
+  color: #64554E;
 }
 
 .page-nav {
@@ -163,7 +171,7 @@ button {
 
 .layout {
   display: grid;
-  grid-template-columns: minmax(82px, 260px) 1fr;
+  grid-template-columns: auto 1fr;
   gap: 24px;
   transition: grid-template-columns 180ms ease;
 }
@@ -184,13 +192,14 @@ button {
   border-radius: var(--radius);
   padding: 24px;
   transition: width 180ms ease, padding 180ms ease, min-width 180ms ease;
+  width: 260px;
   min-width: 260px;
 }
 
 .sidebar.collapsed {
-  width: 82px;
-  min-width: 82px;
-  padding: 20px 16px;
+  width: 56px;
+  min-width: 56px;
+  padding: 20px 10px;
 }
 
 .sidebar-header {
@@ -205,20 +214,28 @@ button {
   border: none;
   background: transparent;
   color: var(--text);
-  border-radius: 50%;
-  padding: 8px;
+  padding: 4px;
   font-size: 0.85rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   transition: transform 180ms ease, color 180ms ease;
 }
 
 .sidebar-toggle:hover,
 .sidebar-toggle:focus {
   color: #64554E;
+}
+
+.sidebar-toggle svg {
+  display: block;
+}
+
+.sidebar-button-only {
+  background: transparent;
+  box-shadow: none;
 }
 
 .sidebar.collapsed .sidebar-toggle {
