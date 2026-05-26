@@ -224,6 +224,77 @@ const sidebar = document.querySelector('.sidebar');
 const layout = document.querySelector('.layout');
 const mapFilter = document.getElementById('map-filter');
 const mapLocations = document.getElementById('map-locations');
+const mapPanel = document.getElementById('map-panel');
+// Leaflet map objects (initialized lazily)
+let map = null;
+let markersLayer = null;
+let activeMapMarker = null;
+
+function createMapIcon(color) {
+  return L.divIcon({
+    className: 'custom-map-icon',
+    html: `<span class="custom-map-pin ${color === '#64554E' ? 'selected' : 'default'}"></span>`,
+    iconSize: [26, 26],
+    iconAnchor: [13, 13],
+    popupAnchor: [0, -14]
+  });
+}
+
+function initMapIfNeeded() {
+  if (typeof L === 'undefined') return; // Leaflet not loaded
+  if (map) return;
+  map = L.map('map', { zoomControl: true }).setView([45.4642, 9.19], 13);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+  }).addTo(map);
+  markersLayer = L.layerGroup().addTo(map);
+}
+
+function geocodeAddress(address) {
+  const cacheKey = 'milan_coords_v1';
+  const cacheRaw = localStorage.getItem(cacheKey);
+  const cache = cacheRaw ? JSON.parse(cacheRaw) : {};
+  if (cache[address]) return Promise.resolve(cache[address]);
+  const url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1&q=' + encodeURIComponent(address + ', Milan, Italy');
+  return fetch(url, { headers: { 'Accept-Language': 'en' } })
+    .then(res => res.json())
+    .then(results => {
+      const out = results && results[0] ? { lat: parseFloat(results[0].lat), lon: parseFloat(results[0].lon) } : null;
+      cache[address] = out;
+      try { localStorage.setItem(cacheKey, JSON.stringify(cache)); } catch (e) {}
+      return out;
+    }).catch(() => null);
+}
+
+async function updateMapMarkers() {
+  if (typeof L === 'undefined') return;
+  initMapIfNeeded();
+  if (!markersLayer) return;
+  markersLayer.clearLayers();
+  const spots = data.filter(item => !state.activeCategory || item.category === state.activeCategory);
+  const bounds = [];
+  for (const spot of spots) {
+    const coords = await geocodeAddress(spot.address || spot.zone || spot.title);
+    if (!coords) continue;
+    const marker = L.marker([coords.lat, coords.lon], { icon: createMapIcon('#CAB7AA') });
+    marker.bindPopup(`<strong>${spot.title}</strong><br>${spot.address || ''}<br><a href="${spot.mapLink}" target="_blank">Open in map</a>`);
+    const selectMarker = () => {
+      if (activeMapMarker && activeMapMarker !== marker) {
+        activeMapMarker.setIcon(createMapIcon('#CAB7AA'));
+      }
+      marker.setIcon(createMapIcon('#64554E'));
+      activeMapMarker = marker;
+    };
+    marker.on('popupopen', selectMarker);
+    marker.on('click', selectMarker);
+    marker.addTo(markersLayer);
+    bounds.push([coords.lat, coords.lon]);
+  }
+  if (bounds.length) {
+    try { map.fitBounds(bounds, { padding: [40, 40] }); } catch (e) {}
+  }
+}
 const galleryModal = document.getElementById('gallery-modal');
 const galleryImage = document.getElementById('gallery-image');
 const galleryCaption = document.getElementById('gallery-caption');
@@ -336,6 +407,12 @@ function setActivePage(page) {
   layout.classList.toggle('sidebar-hidden', page === 'add');
   if (page === 'spots') {
     renderTopicGrid();
+  }
+  if (page === 'map') {
+    renderMapFilters();
+    renderMapLocations();
+    // init map and markers (async)
+    setTimeout(() => updateMapMarkers(), 100);
   }
 }
 

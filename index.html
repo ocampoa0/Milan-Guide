@@ -4,7 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Milan Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
 </head>
 <body>
   <div class="app-shell">
@@ -141,9 +145,7 @@
             <div class="pill-list" id="map-filter"></div>
           </div>
           <div class="map-panel" id="map-panel">
-            <div class="map-placeholder">
-              <span>Map of Milan</span>
-            </div>
+            <div id="map"></div>
             <div class="map-locations" id="map-locations"></div>
           </div>
         </section>
@@ -171,11 +173,11 @@
           <form class="add-form" id="add-form">
             <label>
               Place name
-              <input type="text" id="new-title" name="title" placeholder="Bar Basso" required />
+              <input type="text" id="new-title" name="title" autocomplete="organization" placeholder="Bar Basso" required />
             </label>
             <label>
               Category
-              <select id="new-category" name="category" required>
+              <select id="new-category" name="category" autocomplete="off" required>
                 <option value="Attractions">Attractions</option>
                 <option value="Nightlife">Nightlife</option>
                 <option value="Food">Food</option>
@@ -185,19 +187,19 @@
             </label>
             <label>
               Subtopic
-              <input type="text" id="new-subtopic" name="subtopic" placeholder="Restaurants, Bars, Museums..." required />
+              <input type="text" id="new-subtopic" name="subtopic" autocomplete="off" placeholder="Restaurants, Bars, Museums..." required />
             </label>
             <label>
               Description
-              <textarea id="new-description" name="description" placeholder="A hidden gem in Milan..." required></textarea>
+              <textarea id="new-description" name="description" autocomplete="off" placeholder="A hidden gem in Milan..." required></textarea>
             </label>
             <label>
               Address
-              <input type="text" id="new-address" name="address" placeholder="Via Example, Milano" required />
+              <input type="text" id="new-address" name="address" autocomplete="street-address" placeholder="Via Example, Milano" required />
             </label>
             <label>
               Image URL
-              <input type="url" id="new-image" name="image" placeholder="https://..." required />
+              <input type="url" id="new-image" name="image" autocomplete="url" placeholder="https://..." required />
             </label>
             <button type="submit">Save place</button>
           </form>
@@ -221,6 +223,7 @@
     </div>
   </div>
 
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="script.js"></script>
 </body>
 </html>
