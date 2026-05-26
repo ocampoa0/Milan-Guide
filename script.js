@@ -221,6 +221,7 @@ const addForm = document.getElementById('add-form');
 const formMessage = document.getElementById('form-message');
 const sidebarToggle = document.getElementById('sidebar-toggle');
 const sidebar = document.querySelector('.sidebar');
+const layout = document.querySelector('.layout');
 const mapFilter = document.getElementById('map-filter');
 const mapLocations = document.getElementById('map-locations');
 const galleryModal = document.getElementById('gallery-modal');
@@ -332,6 +333,7 @@ function setActivePage(page) {
     section.classList.toggle('active', section.dataset.page === page);
   });
   navButtons.forEach(button => button.classList.toggle('active', button.dataset.page === page));
+  layout.classList.toggle('sidebar-hidden', page === 'add');
   if (page === 'spots') {
     renderTopicGrid();
   }

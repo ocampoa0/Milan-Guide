@@ -164,6 +164,14 @@ button {
   transition: grid-template-columns 180ms ease;
 }
 
+.layout.sidebar-hidden {
+  grid-template-columns: 0 1fr;
+}
+
+.layout.sidebar-hidden .sidebar {
+  display: none;
+}
+
 .sidebar {
   position: sticky;
   top: 24px;
