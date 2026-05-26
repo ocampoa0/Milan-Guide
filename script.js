@@ -212,8 +212,8 @@ const topics = [
 
 const categoryTitle = document.getElementById('category-title');
 const spotCards = document.getElementById('spot-cards');
-    image: 'Gallery picture.jpg'
 const favouriteEmpty = document.getElementById('favourite-empty');
+const favouriteCards = document.getElementById('favourite-cards');
 const topicGrid = document.getElementById('topic-grid');
 const backButton = document.getElementById('back-button');
 const spotSummary = document.getElementById('spot-summary');
